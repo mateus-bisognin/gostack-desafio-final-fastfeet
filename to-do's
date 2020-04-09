@@ -1,0 +1,27 @@
+desafio 3
+[OK] Criar tabela Entregadores
+[OK] Criar rotas para os Entregadores
+[OK] Criar tabela Encomendas (Parcel, Package)
+[OK] Criar rotas para Encomendas
+[OK] Criar relacionamento entre Entregadores e Encomendas
+[OK] Criar tabela de problemas
+[OK] Criar rotas para problemas
+[  ] Criar funcionalidades para o Entregador
+[OK] DeliverymanController.store
+[  ] DeliverymanController.index
+[  ] DeliverymanController.update
+[  ] DeliverymanController.delete
+[  ] PackageController.store
+[  ] PackageController.index
+[  ] PackageController.update
+[  ] PackageController.delete
+
+[  ] DeliveryController.store
+[  ] DeliveryController.index
+[  ] DeliveryController.update
+[  ] DeliveredController.index
+[  ] ProblemController.store
+[  ] ProblemController.index
+[  ] ProblemController.delete
+[  ] DeliveryProblemController.index
+[  ] Criar notificações por email
