@@ -6,22 +6,41 @@ desafio 3
 [OK] Criar relacionamento entre Entregadores e Encomendas
 [OK] Criar tabela de problemas
 [OK] Criar rotas para problemas
-[  ] Criar funcionalidades para o Entregador
-[OK] DeliverymanController.store
-[  ] DeliverymanController.index
-[  ] DeliverymanController.update
-[  ] DeliverymanController.delete
-[  ] PackageController.store
-[  ] PackageController.index
-[  ] PackageController.update
-[  ] PackageController.delete
 
-[  ] DeliveryController.store
-[  ] DeliveryController.index
-[  ] DeliveryController.update
-[  ] DeliveredController.index
-[  ] ProblemController.store
-[  ] ProblemController.index
-[  ] ProblemController.delete
-[  ] DeliveryProblemController.index
+[OK] DeliverymanController.store
+[OK] DeliverymanController.index
+[OK] DeliverymanController.update
+[OK] DeliverymanController.delete
+[OK] PackageController.store
+[OK] PackageController.index
+[OK] PackageController.update
+[OK] PackageController.delete
+
+[OK] DeliveryController.store
+[OK] DeliveryController.index
+[OK] DeliveryController.update
+[OK] DeliveryController.index (delivered)
+[OK] ProblemController.store
+[OK] ProblemController.index
+[OK] ProblemController.delete
+[OK] DeliveryProblemController.index
+
+[  ] Adicionar Avatar
+[  ] Adicionar Assinatura
+      - multer
 [  ] Criar notificações por email
+      redis
+      - bee-queue
+      - nodemailer
+      - nodemailer-express-handlebars
+      - express-handlebars
+[  ] Limite de retiradas
+      - mongoose
+[  ] Monitoramento de erros
+      - sentry/node
+      - express-async-errors
+      - youch
+[  ] Variáveis ambiente
+      - dotenv
+
+- cors

@@ -1,7 +1,25 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Recipient from '../models/Recipient';
 
 class RecipientController {
+  async index(req, res) {
+    const { page = 1, name, ...query } = req.query;
+    const recipients = await Recipient.findAll({
+      where: {
+        ...query,
+        ...(name && {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+        }),
+      },
+      limit: 20,
+      offset: (page - 1) * 20,
+    });
+    return res.json(recipients);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -30,10 +48,6 @@ class RecipientController {
   async update(req, res) {
     const { id } = req.params;
 
-    if (!id) {
-      return res.status(400).json({ error: 'Id not provided' });
-    }
-
     const schema = Yup.object().shape({
       name: Yup.string(),
       address_street: Yup.string(),
@@ -50,7 +64,12 @@ class RecipientController {
 
     const recipient = await Recipient.findByPk(id);
 
+    if (!recipient) {
+      return res.status(400).json({ error: 'Registry was not found' });
+    }
+
     const { dataValues } = await recipient.update(req.body);
+    // Verificar se é realmente necessário retornar valores
     const { id: recipientId, name, ...address } = dataValues;
 
     return res.json({
