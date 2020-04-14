@@ -21,17 +21,32 @@ class PackageController {
       },
       limit: 20,
       offset: (page - 1) * 20,
-      attributes: ['id', 'product'],
+      attributes: [
+        'id',
+        'product',
+        'canceled_at',
+        'start_date',
+        'end_date',
+        'status',
+      ],
       include: [
         {
           model: Deliveryman,
           as: 'deliveryman',
-          attributes: ['name'],
+          attributes: ['name', 'avatar_id'],
         },
         {
           model: Recipient,
           as: 'recipient',
-          attributes: ['name', 'address_city', 'address_state'],
+          attributes: [
+            'name',
+            'address_street',
+            'address_number',
+            'address_complement',
+            'address_city',
+            'address_state',
+            'address_zipcode',
+          ],
         },
       ],
       order: [['id', 'DESC']],
@@ -50,7 +65,6 @@ class PackageController {
       return res.status(400).json({ error: 'Validation faileds' });
     }
 
-    //const { id, product, recipient_id, deliveryman_id } = await Package.create(
     const { id } = await Package.create(req.body);
     const newPackage = await Package.findByPk(id, {
       include: [
@@ -93,7 +107,7 @@ class PackageController {
     }
 
     const { dataValues } = await foundPackage.update(req.body);
-    // Verificar se é realmente necessário retornar valores
+
     const { product, recipient_id, deliveryman_id } = dataValues;
     return res.json({
       id,

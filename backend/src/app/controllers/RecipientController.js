@@ -69,7 +69,7 @@ class RecipientController {
     }
 
     const { dataValues } = await recipient.update(req.body);
-    // Verificar se é realmente necessário retornar valores
+
     const { id: recipientId, name, ...address } = dataValues;
 
     return res.json({

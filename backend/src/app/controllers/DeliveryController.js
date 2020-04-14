@@ -30,7 +30,6 @@ class DeliveryController {
       ...(delivered ? { [Op.not]: { end_date: null } } : { end_date: null }),
     };
 
-    // Verificar quais informações retornar
     const data = await Package.findAll({
       where: query,
       attributes: ['id', 'start_date', 'end_date', 'createdAt'],
@@ -119,7 +118,6 @@ class DeliveryController {
 
     await foundPackage.save();
 
-    // Verificar quais informações retornar
     return res.json(foundPackage);
   }
 
@@ -196,7 +194,6 @@ class DeliveryController {
 
     await foundPackage.save();
 
-    // Verificar quais informações retornar
     return res.json(foundPackage);
   }
 

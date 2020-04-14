@@ -16,7 +16,7 @@ class DeliverymanController {
           },
         }),
       },
-      attributes: ['id', 'name', 'email'],
+      attributes: ['id', 'name', 'email', 'avatar_id'],
       limit: 20,
       offset: (page - 1) * 20,
       order: [['id']],
@@ -114,7 +114,6 @@ class DeliverymanController {
       ...req.body,
       avatar_id,
     });
-    // Verificar se é realmente necessário retornar valores
 
     const { name, email } = dataValues;
 
