@@ -1,0 +1,12 @@
+<strong>Olá, {{ deliveryman.name }}</strong>
+<p>Uma de suas entregas foi cancelada, confira os detalhes abaixo:</p>
+<p>
+  <strong>ID da Entrega: </strong> {{ id }} <br />
+  <strong>Produto: </strong> {{ product }} <br />
+  <strong>Data/hora: </strong> {{ date }} <br />
+  <strong>Cliente: </strong> {{ recipient.name }} <br />
+  <strong>Endereço: </strong> Rua {{ recipient.address_street }}, {{ recipient.address_number }},
+  {{ recipient.address_complement }}<br />
+  <strong>Cidade: </strong> {{ recipient.address_city }} - {{ recipient.address_state }} <br />
+  <br />
+</p>

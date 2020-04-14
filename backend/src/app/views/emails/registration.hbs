@@ -1,0 +1,11 @@
+<strong>Olá, {{ deliveryman.name }}</strong>
+<p>Uma nova entrega foi cadastrada em seu nome e já está disponível para retirada.<br />
+  Confira os detalhes abaixo:</p>
+<p>
+  <strong>ID da Entrega: </strong> {{ id }} <br />
+  <strong>Produto: </strong> {{ product }} <br />
+  <strong>Cliente: </strong> {{ recipient.name }} <br />
+  <strong>Endereço: </strong> Rua {{ recipient.address_street }}, {{ recipient.address_number }},
+  {{ recipient.address_complement }}<br />
+  <strong>Cidade: </strong> {{ recipient.address_city }} - {{ recipient.address_state }} <br />
+</p>

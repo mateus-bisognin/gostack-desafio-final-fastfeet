@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer';
 
 //import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
@@ -12,13 +14,18 @@ import ProblemController from './app/controllers/ProblemController';
 import authMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
+const upload = multer(multerConfig);
 
 //routes.post('/users', UserController.store);
 routes.post('/session', SessionController.store);
 
 routes.post('/deliveryman/:id/deliveries', DeliveryController.store);
 routes.get('/deliveryman/:id/deliveries', DeliveryController.index);
-routes.put('/deliveryman/:id/deliveries/:packageId', DeliveryController.update);
+routes.put(
+  '/deliveryman/:id/deliveries/:packageId',
+  upload.single('file'),
+  DeliveryController.update
+);
 
 routes.post('/delivery/:id/problems', ProblemController.store);
 routes.get('/delivery/:id/problems', ProblemController.index);
@@ -30,9 +37,13 @@ routes.post('/recipient', RecipientController.store);
 routes.get('/recipient', RecipientController.index);
 routes.put('/recipient/:id', RecipientController.update);
 
-routes.post('/deliveryman', DeliverymanController.store);
+routes.post('/deliveryman', upload.single('file'), DeliverymanController.store);
 routes.get('/deliveryman', DeliverymanController.index);
-routes.put('/deliveryman/:id', DeliverymanController.update);
+routes.put(
+  '/deliveryman/:id',
+  upload.single('file'),
+  DeliverymanController.update
+);
 routes.delete('/deliveryman/:id', DeliverymanController.delete);
 
 routes.post('/package', PackageController.store);

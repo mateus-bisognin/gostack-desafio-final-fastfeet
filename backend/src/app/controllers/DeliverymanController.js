@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { Op } from 'sequelize';
 import Deliveryman from '../models/Deliveryman';
+import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
@@ -24,14 +25,18 @@ class DeliverymanController {
     return res.json(deliverymen);
   }
 
-  async store(req, res) {
+  async store(req, res, next) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
       email: Yup.string().email().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation failed' });
+      return next({
+        name: 'remove uploaded file',
+        status: 400,
+        message: 'Validation failed',
+      });
     }
 
     const { email } = req.body;
@@ -39,26 +44,48 @@ class DeliverymanController {
     const deliverymanExists = await Deliveryman.findOne({ where: { email } });
 
     if (deliverymanExists) {
-      return res.status(400).json({ error: 'Deliveryman already exists' });
+      return next({
+        name: 'remove uploaded file',
+        status: 400,
+        message: 'Deliveryman already exists',
+      });
     }
 
-    const { id, name } = await Deliveryman.create(req.body);
+    const { originalname, filename } = req.file !== undefined ? req.file : {};
+
+    const { id: avatar_id = null } =
+      req.file !== undefined
+        ? await File.create({
+            name: originalname,
+            path: filename,
+          })
+        : {};
+
+    const { id, name } = await Deliveryman.create({
+      ...req.body,
+      avatar_id,
+    });
 
     return res.json({
       id,
       name,
       email,
+      avatar_id,
     });
   }
 
-  async update(req, res) {
+  async update(req, res, next) {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation failed' });
+      return next({
+        name: 'remove uploaded file',
+        status: 400,
+        message: 'Validation failed',
+      });
     }
 
     const { id } = req.params;
@@ -66,10 +93,27 @@ class DeliverymanController {
     const deliveryman = await Deliveryman.findByPk(id);
 
     if (!deliveryman) {
-      return res.status(400).json({ error: 'Registry was not found' });
+      return next({
+        name: 'remove uploaded file',
+        status: 400,
+        message: 'Registry was not found',
+      });
     }
 
-    const { dataValues } = await deliveryman.update(req.body);
+    const { originalname, filename } = req.file !== undefined ? req.file : {};
+
+    const { id: avatar_id = null } =
+      req.file !== undefined
+        ? await File.create({
+            name: originalname,
+            path: filename,
+          })
+        : {};
+
+    const { dataValues } = await deliveryman.update({
+      ...req.body,
+      avatar_id,
+    });
     // Verificar se é realmente necessário retornar valores
 
     const { name, email } = dataValues;
@@ -78,6 +122,7 @@ class DeliverymanController {
       id,
       name,
       email,
+      avatar_id,
     });
   }
 

@@ -4,6 +4,9 @@ import Package from '../models/Package';
 import Deliveryman from '../models/Deliveryman';
 import Recipient from '../models/Recipient';
 
+import DeliveryRegistrationMail from '../jobs/DeliveryRegistrationMail';
+import Queue from '../../lib/Queue';
+
 class PackageController {
   async index(req, res) {
     const { page = 1, product, ...query } = req.query;
@@ -47,11 +50,27 @@ class PackageController {
       return res.status(400).json({ error: 'Validation faileds' });
     }
 
-    const { id, product, recipient_id, deliveryman_id } = await Package.create(
-      req.body
-    );
+    //const { id, product, recipient_id, deliveryman_id } = await Package.create(
+    const { id } = await Package.create(req.body);
+    const newPackage = await Package.findByPk(id, {
+      include: [
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          attributes: ['id', 'name', 'email'],
+        },
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: { exclude: ['createdAt', 'updatedAt'] },
+        },
+      ],
+      attributes: ['id', 'product'],
+    });
 
-    return res.json({ id, product, recipient_id, deliveryman_id });
+    await Queue.add(DeliveryRegistrationMail.key, { newPackage });
+
+    return res.json(newPackage);
   }
 
   async update(req, res) {

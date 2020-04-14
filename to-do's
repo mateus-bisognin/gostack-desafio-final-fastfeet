@@ -25,8 +25,8 @@ desafio 3
 [OK] ProblemController.delete
 [OK] DeliveryProblemController.index
 
-[  ] Adicionar Avatar
-[  ] Adicionar Assinatura
+[OK] Adicionar Avatar
+[OK] Adicionar Assinatura
       - multer
 [  ] Criar notificações por email
       redis
@@ -34,13 +34,15 @@ desafio 3
       - nodemailer
       - nodemailer-express-handlebars
       - express-handlebars
-[  ] Limite de retiradas
-      - mongoose
-[  ] Monitoramento de erros
+      cancelamento
+      cadastro
+
+[OK] Limite de retiradas
+[OK] Monitoramento de erros
       - sentry/node
       - express-async-errors
       - youch
-[  ] Variáveis ambiente
+[OK] Variáveis ambiente
       - dotenv
 
 - cors
