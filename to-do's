@@ -28,7 +28,7 @@ desafio 3
 [OK] Adicionar Avatar
 [OK] Adicionar Assinatura
       - multer
-[  ] Criar notificações por email
+[OK] Criar notificações por email
       redis
       - bee-queue
       - nodemailer
