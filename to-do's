@@ -46,3 +46,17 @@ desafio 3
       - dotenv
 
 - cors
+
+
+
+      [  ] Ações
+            [  ] Menu
+            [  ] Botão Visualizar
+            [  ] Botão Editar
+            [  ] Botão Excluir
+      [  ] Foto Entregador
+      [OK] Buscar
+      [  ] Status
+      [  ] View
+      [  ] Edition
+      [  ] Async Select
