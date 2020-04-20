@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useField } from '@rocketseat/unform';
 
-const ImageInput = ({ name, ...rest }) => {
+const ImageInput = ({ name, setState, ...rest }) => {
   const inputRef = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
   const [preview, setPreview] = useState(defaultValue);
@@ -16,6 +16,7 @@ const ImageInput = ({ name, ...rest }) => {
     if (!file) {
       setPreview(null);
     }
+    setState(file);
     const previewURL = URL.createObjectURL(file);
     setPreview(previewURL);
   }, []);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -17,9 +17,18 @@ const schema = Yup.object().shape({
 });
 
 export default function DeliverymanCreation() {
+  const [file, setFile] = useState({});
+
   async function handleSubmit(data, { resetForm }) {
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => formData.append(key, value));
+    formData.append('file', file, file.name);
     await api
-      .post('deliveryman', data)
+      .post('deliveryman', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((response) => toast.success('Entregador cadastrado com sucesso!'))
       .catch(({ response }) => toast.error(response.data.error));
 
@@ -37,7 +46,7 @@ export default function DeliverymanCreation() {
           </div>
         </FormHeader>
         <FormFields>
-          <ImageInput name="file" />
+          <ImageInput name="file" setState={setFile} />
           <div className="row">
             <label className="custom">
               <strong>Nome</strong>
