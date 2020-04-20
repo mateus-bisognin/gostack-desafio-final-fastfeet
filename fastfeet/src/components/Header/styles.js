@@ -46,9 +46,10 @@ export const Profile = styled.div`
     color: #666;
   }
 
-  a {
+  button {
     margin-top: 5px;
     white-space: nowrap;
     color: #de3b3b;
+    border: none;
   }
 `;

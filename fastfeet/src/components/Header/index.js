@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '~/store/modules/auth/actions';
@@ -36,7 +36,7 @@ export default function Header() {
         <aside>
           <Profile>
             <strong>{userName}</strong>
-            <Link onClick={handleSignOut}>sair do sistema</Link>
+            <button onClick={handleSignOut}>sair do sistema</button>
           </Profile>
         </aside>
       </Content>
