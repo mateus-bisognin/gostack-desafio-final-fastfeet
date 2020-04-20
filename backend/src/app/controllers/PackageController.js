@@ -19,8 +19,8 @@ class PackageController {
           },
         }),
       },
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 10,
+      offset: (page - 1) * 10,
       attributes: [
         'id',
         'product',
@@ -62,7 +62,7 @@ class PackageController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation faileds' });
+      return res.status(400).json({ error: 'Validation failed' });
     }
 
     const { id } = await Package.create(req.body);

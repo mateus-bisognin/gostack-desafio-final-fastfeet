@@ -14,8 +14,9 @@ class RecipientController {
           },
         }),
       },
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 10,
+      offset: (page - 1) * 10,
+      order: [['id']],
     });
     return res.json(recipients);
   }
@@ -77,6 +78,18 @@ class RecipientController {
       name,
       address,
     });
+  }
+
+  async delete(req, res) {
+    const recipient = await Recipient.findByPk(req.params.id);
+
+    if (!recipient) {
+      return res.status(400).json({ error: 'Registry was not found' });
+    }
+
+    await recipient.destroy();
+
+    return res.status(200).send();
   }
 }
 

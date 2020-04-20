@@ -41,22 +41,24 @@ class App {
 
   exceptionHandler() {
     this.server.use(async (err, req, res, next) => {
-      if (req.file === undefined || err.name !== 'remove uploaded file') {
-        if (process.env.NODE_ENV === 'development') {
-          const errors = await new Youch(err, req).toJSON();
+      if (req.file !== undefined) {
+        const destination = path.resolve(__dirname, '..', 'tmp', 'uploads');
+        const { filename } = req.file;
 
-          return res.status(500).json(errors);
-        }
-
-        return res.status(500).json({ error: 'Internal server error' });
+        fs.unlink(path.resolve(destination, filename), () => {});
       }
 
-      const destination = path.resolve(__dirname, '..', 'tmp', 'uploads');
-      const { filename } = req.file;
+      if (err.name === 'remove uploaded file') {
+        return res.status(err.status).json({ error: err.message });
+      }
 
-      fs.unlink(path.resolve(destination, filename), () => {});
+      if (process.env.NODE_ENV === 'development') {
+        const errors = await new Youch(err, req).toJSON();
 
-      return res.status(err.status).json({ error: err.message });
+        return res.status(500).json(errors);
+      }
+
+      return res.status(500).json({ error: 'Internal server error' });
     });
   }
 }
